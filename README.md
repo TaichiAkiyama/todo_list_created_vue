@@ -1,4 +1,4 @@
-# vue_todo_list_taichi
+# vue_todo_list
 
 ## Project setup
 ```
