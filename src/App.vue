@@ -1,28 +1,72 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="todo-list">
+      <div class="title">Todo List</div>
+
+      <div class="form">
+        <AddItem placeholder="Input todo..." @add="addItem" />
+      </div>
+
+      <div class="list">
+        <ItemList :items="items" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AddItem from "./components/AddItem.vue";
+import ItemList from "./components/ItemList.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    HelloWorld
+    AddItem,
+    ItemList
+  },
+  data: () => {
+    return { items: [] };
+  },
+  methods: {
+    addItem(title) {
+      let id = 1;
+      if (this.items.length > 0) {
+        id =
+          Math.max.apply(
+            null,
+            this.items.map(item => item.id)
+          ) + 1;
+      }
+
+      this.items.push({
+        id,
+        title,
+        isChecked: false
+      });
+    }
   }
-}
+};
 </script>
 
-<style>
+<style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  color: #696969;
+  font-size: 18px;
+}
+
+.todo-list {
+  padding: 16px;
+  width: 600px;
+  border: 1px solid #696969;
+}
+
+.title {
+  font-size: 24px;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+}
+
+.form {
+  margin-top: 16px;
 }
 </style>
